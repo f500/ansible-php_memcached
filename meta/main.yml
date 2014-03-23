@@ -1,0 +1,7 @@
+---
+
+dependencies:
+  - memcached
+  - php
+  - php_dev
+  - php_pear

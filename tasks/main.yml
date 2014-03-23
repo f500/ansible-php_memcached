@@ -1,0 +1,44 @@
+---
+
+- name: install igbinary
+  command: pecl install igbinary creates=/usr/lib/php5/20121212/igbinary.so
+
+- name: write igbinary.ini
+  template: src=igbinary.ini.j2 dest=/etc/php5/mods-available/igbinary.ini owner=root group=root mode=0644
+
+- name: activate cli igbinary
+  file: src=/etc/php5/mods-available/igbinary.ini dest=/etc/php5/cli/conf.d/20-igbinary.ini state=link
+  when: "'cli' in php_memcached_versions"
+
+- name: activate fpm igbinary
+  file: src=/etc/php5/mods-available/igbinary.ini dest=/etc/php5/fpm/conf.d/20-igbinary.ini state=link
+  notify:
+    - restart php-fpm
+  when: "'fpm' in php_memcached_versions"
+
+- name: install libevent
+  apt: pkg=libevent-dev state=present
+
+- name: install libcloog
+  apt: pkg=libcloog-ppl0 state=present
+
+- name: check pecl-memcached
+  stat: path=/usr/lib/php5/20121212/memcached.so
+  register: check_pecl_memcached
+
+- name: install pecl-memcached
+  script: pecl-memcached-installer.sh 1.0.16 2.1.0
+  when: not check_pecl_memcached.stat.exists
+
+- name: write memcached.ini
+  template: src=memcached.ini.j2 dest=/etc/php5/mods-available/memcached.ini owner=root group=root mode=0644
+
+- name: activate cli memcached
+  file: src=/etc/php5/mods-available/memcached.ini dest=/etc/php5/cli/conf.d/20-memcached.ini state=link
+  when: "'cli' in php_memcached_versions"
+
+- name: activate fpm memcached
+  file: src=/etc/php5/mods-available/memcached.ini dest=/etc/php5/fpm/conf.d/20-memcached.ini state=link
+  notify:
+    - restart php-fpm
+  when: "'fpm' in php_memcached_versions"

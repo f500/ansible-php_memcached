@@ -1,0 +1,14 @@
+extension=igbinary.so
+
+{% if php_igbinary_session_serialize_handler %}
+[session]
+session.serialize_handler = {{ php_igbinary_session_serialize_handler }}
+{% endif %}
+
+[igbinary]
+igbinary.compact_strings = {{ php_igbinary_compact_strings }}
+
+{% if php_igbinary_apc_serializer is defined %}
+[apc]
+apc.serializer = {{ php_igbinary_apc_serializer }}
+{% endif %}

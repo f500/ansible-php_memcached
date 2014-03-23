@@ -1,0 +1,16 @@
+extension=memcached.so
+
+[memcached]
+memcached.compression_factor          = {{ php_memcached_compression_factor }}
+memcached.compression_threshold       = {{ php_memcached_compression_threshold }}
+memcached.compression_type            = "{{ php_memcached_compression_type }}"
+memcached.serializer                  = "{{ php_memcached_serializer }}"
+memcached.sess_binary                 = {{ php_memcached_sess_binary }}
+memcached.sess_consistent_hash        = {{ php_memcached_sess_consistent_hash }}
+memcached.sess_lock_wait              = {{ php_memcached_sess_lock_wait }}
+memcached.sess_locking                = {{ php_memcached_sess_locking }}
+memcached.sess_number_of_replicas     = {{ php_memcached_sess_number_of_replicas }}
+memcached.sess_prefix                 = "{{ php_memcached_sess_prefix }}"
+memcached.sess_randomize_replica_read = {{ php_memcached_sess_randomize_replica_read }}
+memcached.sess_remove_failed          = {{ php_memcached_sess_remove_failed }}
+memcached.use_sasl                    = {{ php_memcached_use_sasl }}
